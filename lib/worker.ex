@@ -28,7 +28,8 @@ defmodule Meteox.Worker do
     |> JSON.decode!
     |> compute_weather
   end
-  def parse_response(_), do: {:error, "Not found"}
+  def parse_response({:ok, %HTTPoison.Response{status_code: 404}}), do: {:error, "Location not found"}
+  def parse_response(_), do: {:error, "Something went wong"}
 
   def compute_weather(payload) do
     payload

@@ -1,6 +1,8 @@
 # Meteox
 
-**TODO: Add description**
+**A CLI Weather application built with elixir**
+
+**The purpose is to learn how to handle painless concurrency using elixir**
 
 ## Installation
 

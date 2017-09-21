@@ -2,17 +2,15 @@ defmodule Meteox do
   @moduledoc """
   Documentation for Meteox.
   """
+  alias Meteox.{Worker, Coordinator}
 
-  @doc """
-  Hello world.
+  @cities ["Kara", "Lome", "Dapaong", "Kpalime", "Atakpame"]
 
-  ## Examples
-
-      iex> Meteox.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def temperature_of(cities) do
+    coordinator_pid = spawn(Coordinator, :loop, [[], Enum.count(cities)])
+    cities |> Enum.each(fn city ->
+      worker_pid = spawn(Worker, :loop, [])
+      send worker_pid, {coordinator_pid, city}
+    end)
   end
 end

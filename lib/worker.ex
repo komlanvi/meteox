@@ -3,6 +3,14 @@ defmodule Meteox.Worker do
   Worker to call the openweather API
   """
 
+  def loop do
+    receive do
+      {sender_pid, location} -> send sender_pid, {:ok, temperature_of(location)}
+      _ -> IO.puts "Cannot process message"
+    end
+    loop
+  end
+
   def temperature_of(location) do
     response = location
     |> url_of
